@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/Lilbarisx/EE471_Week12/compare/v1.1.0...v2.0.0) (2026-06-04)
+
+
+### Features
+
+* Readme file changed major. ([2dbee40](https://github.com/Lilbarisx/EE471_Week12/commit/2dbee40bb85d9d9c885dab314d0a20f4567c2110))
+
+
+### BREAKING CHANGES
+
+* Readme file changed major.
+
 # [1.1.0](https://github.com/Lilbarisx/EE471_Week12/compare/v1.0.1...v1.1.0) (2026-06-04)
 
 

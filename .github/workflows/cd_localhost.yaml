@@ -17,14 +17,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        shell: powershell
+        shell: powershell -ExecutionPolicy Bypass -Command ". '{0}'"
         run: |
-          $env:PATH = "C:\Users\brstp\AppData\Local\Python\bin;" + $env:PATH
+          $env:PATH = "C:\Users\brstp\AppData\Local\Python\pythoncore-3.14-64;C:\Users\brstp\AppData\Local\Python\pythoncore-3.14-64\Scripts;" + $env:PATH
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Kill previous Django server
-        shell: powershell
+        shell: powershell -ExecutionPolicy Bypass -Command ". '{0}'"
         run: |
           $port = 8000
           $proc = Get-NetTCPConnection -LocalPort $port -ErrorAction SilentlyContinue | Select-Object -First 1
@@ -36,7 +36,8 @@ jobs:
           }
 
       - name: Start Django server in background
-        shell: powershell
+        shell: powershell -ExecutionPolicy Bypass -Command ". '{0}'"
         run: |
-          $env:PATH = "C:\Users\brstp\AppData\Local\Python\bin;" + $env:PATH
+          $env:PATH = "C:\Users\brstp\AppData\Local\Python\pythoncore-3.14-64;C:\Users\brstp\AppData\Local\Python\pythoncore-3.14-64\Scripts;" + $env:PATH
+          $env:RUNNER_TRACKING_ID = ""
           Start-Process python -ArgumentList "manage.py runserver 8000" -WindowStyle Hidden

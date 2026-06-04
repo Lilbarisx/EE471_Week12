@@ -22,6 +22,8 @@ jobs:
           $env:PATH = "C:\Users\brstp\AppData\Local\Python\pythoncore-3.14-64;C:\Users\brstp\AppData\Local\Python\pythoncore-3.14-64\Scripts;" + $env:PATH
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          Copy-Item "c:\Users\brstp\Desktop\EE471\Week12\db.sqlite3" -Destination "." -ErrorAction SilentlyContinue
+          python manage.py migrate
 
       - name: Kill previous Django server
         shell: powershell -ExecutionPolicy Bypass -Command ". '{0}'"

@@ -1,0 +1,44 @@
+name: CD Localhost
+
+on:
+  workflow_run:
+    workflows: ["CI Semantic Versioning"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Kill previous Django server
+        shell: powershell
+        run: |
+          $port = 8000
+          $proc = Get-NetTCPConnection -LocalPort $port -ErrorAction SilentlyContinue | Select-Object -First 1
+          if ($proc) {
+              Write-Host "Killing process using port $port (PID: $($proc.OwningProcess))"
+              Stop-Process -Id $proc.OwningProcess -Force -ErrorAction SilentlyContinue
+          } else {
+              Write-Host "No process found on port $port"
+          }
+
+      - name: Start Django server in background
+        shell: powershell
+        run: |
+          Start-Process python -ArgumentList "manage.py runserver 8000" -WindowStyle Hidden

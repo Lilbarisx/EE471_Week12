@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+
+# Django
+db.sqlite3
+local_settings.py
+staticfiles/
+
+# Node (semantic-release dependencies)
+node_modules/
+package-lock.json
+
+# Exercise PDF
+Week-12-InClass-Exercise.pdf

@@ -16,13 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
       - name: Install dependencies
+        shell: powershell
         run: |
+          $env:PATH = "C:\Users\brstp\AppData\Local\Python\bin;" + $env:PATH
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
@@ -41,4 +38,5 @@ jobs:
       - name: Start Django server in background
         shell: powershell
         run: |
+          $env:PATH = "C:\Users\brstp\AppData\Local\Python\bin;" + $env:PATH
           Start-Process python -ArgumentList "manage.py runserver 8000" -WindowStyle Hidden
